@@ -4,7 +4,7 @@ import datetime
 
 
 def readcputemp():
-    f = open("/sys/class/thermal/thermal_zone0/temp","r")
+    f = open('/sys/class/thermal/thermal_zone0/temp', 'r')
     line = f.readline()
     f.close()
     cputemp = '%.1f' % (float(line) / 1000.0)
