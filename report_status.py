@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import datetime
 
+import datetime
 
 def readcputemp():
     f = open('/sys/class/thermal/thermal_zone0/temp', 'r')
@@ -15,7 +15,7 @@ def main():
     cputemp = readcputemp()
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y/%m/%d %H:%M:%S')
-    message = 'Raspberry Pi B+ cpu=' + cputemp + '℃ local time=' + timestamp
+    message = 'Raspberry Pi cpu=' + cputemp + '℃ local time=' + timestamp
     print message
 
 
