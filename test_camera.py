@@ -36,6 +36,14 @@ def main():
 #       print('continue...')
 
 
+def main0():
+    cam = cv2.VideoCapture(0)
+    image = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
+    filename = 'main0.jpg'
+    cv2.imwrite(SAVE_PATH + filename, image)
+    print('take ' + filename)
+
+
 def frame_sub(im1, im2, im3, th, blur):
     d1 = cv2.absdiff(im3, im2)
     d2 = cv2.absdiff(im2, im1)
