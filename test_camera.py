@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
+import datetime
+import time
 
 SAVE_PATH = '/run/shm/ramdisk/'
 
@@ -11,8 +13,19 @@ def is_moving(image1, image2, th):
     im2 = cv2.cvtColor(image2, cv2.COLOR_RGB2GRAY)
     d1 = cv2.absdiff(im1, im2)
     sum = d1.sum()
-    print('th=' + str(th) + ' : sum=' + str(sum))
+#   print('th=' + str(th) + ' : sum=' + str(sum))
     return (th < sum)
+
+
+def save_image(image, filepath):
+    now = datetime.datetime.now()
+    timestamp = now.strftime('%Y%m%d %H%M%S')
+    location = (460, 470)
+    fontface = cv2.FONT_HERSHEY_PLAIN
+    fontscale = 1.0
+    color = (0,255,0)
+    cv2.putText(image, timestamp, location, fontface, fontscale, color)
+    cv2.imwrite(filepath, image)
 
 
 def main():
@@ -31,25 +44,23 @@ def main():
         if (True == is_moving(im1, im2, th)):
             filename = 'moving_%04d.jpg' % save_no
             save_no = (save_no + 1) % save_max
-            cv2.imwrite(SAVE_PATH + filename, im2)
+            save_image(im2, SAVE_PATH + filename)
             print('take ' + filename)
         im1 = im2
         key = cv2.waitKey(3000)
         # Escキーが押されたら
-        if key == 27:
+        if int(key) == 27:
             break
 #       print('continue...')
 
 
 def main0():
     cam = cv2.VideoCapture(0)
+#   image = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
     ret, image = cam.read()
-    if ret:
-        filename = 'main0.jpg'
-        cv2.imwrite(SAVE_PATH + filename, image)
-        print('take ' + filename)
-    else:
-        print('capture error.')
+    filename = 'main0.jpg'
+    cv2.imwrite(SAVE_PATH + filename, image)
+    print('take ' + filename)
 
 
 if __name__ == '__main__':
