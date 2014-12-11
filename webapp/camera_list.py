@@ -27,7 +27,7 @@ HTML_FOOTER = """
 """
 
 
-def view():
+def page():
     global FILEPATH
     global HTML_HEADER
     global HTML_FOOTER
@@ -41,12 +41,10 @@ def view():
 
     for filepath in filepathes:
         filename = filepath[filepath.rfind('/')+1:]
-        outstring += '<a href=ramdisk/' + filename + ' class=\"highslide\" onclick=\"return hs.expand(this)\"><img src=\"ramdisk/' + filename + '\" width=\"320\" height=\"240\" class=\"flyer\" /></a><br><br>'
+        outstring += '<a href=ramdisk/' + filename + ' class=\"highslide\" onclick=\"return hs.expand(this)\"><img src=\"ramdisk/' + filename + '\" width=\"320\" height=\"240\" class=\"flyer\" /></a><br><br>\n'
 
     outstring += HTML_FOOTER
 
-#   outstring.replace('\n', '')
-#   outstring.replace('\r', '')
     return outstring
 
 
@@ -55,8 +53,8 @@ def reset():
     filepathes = glob.glob(FILEPATH)
     for filepath in filepathes:
         os.remove(filepath)
-    return main()
+    return page()
 
 
 if __name__ == '__main__':
-    print view()
+    print page()
