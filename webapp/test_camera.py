@@ -11,19 +11,19 @@ SAVE_PATH = '/run/shm/ramdisk/'
 def is_moving(image1, image2, th):
     im1 = cv2.cvtColor(image1, cv2.COLOR_RGB2GRAY)
     im2 = cv2.cvtColor(image2, cv2.COLOR_RGB2GRAY)
-    d1 = cv2.absdiff(im1, im2)
-    sum = d1.sum()
+    diff = cv2.absdiff(im1, im2)
+    allsum = diff.sum()
 #   print('th=' + str(th) + ' : sum=' + str(sum))
-    return (th < sum)
+    return th < allsum
 
 
 def save_image(image, filepath):
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y%m%d %H%M%S')
-    location=(460, 470)
-    fontface=cv2.FONT_HERSHEY_PLAIN
-    fontscale=1.0
-    color=(0,255,0)
+    location = (460, 470)
+    fontface = cv2.FONT_HERSHEY_PLAIN
+    fontscale = 1.0
+    color = (0, 255, 0)
     cv2.putText(image, timestamp, location, fontface, fontscale, color)
     cv2.imwrite(filepath, image)
 
@@ -41,7 +41,7 @@ def main():
     while True:
         ret, im2 = cam.read()
         # フレーム間差分計算
-        if (True == is_moving(im1, im2, th)):
+        if is_moving(im1, im2, th):
             filename = 'moving_%04d.jpg' % save_no
             save_no = (save_no + 1) % save_max
             save_image(im2, SAVE_PATH + filename)
@@ -77,7 +77,7 @@ def flame_sub(im1, im2, im3, th, blur):
     # ゴマ塩ノイズ除去
     im_mask = cv2.medianBlur(im_mask,blur)
 
-    return  im_mask
+    return im_mask
 
 
 def main_org():
