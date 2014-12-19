@@ -16,12 +16,28 @@ HTML_HEADER = """
 </script>
 <script type="text/javascript">hs.graphicsDir = 'highslide/graphics/';
 </script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <title>camera view</title>
 </head>
 <body id="top">
 """
 
 HTML_FOOTER = """
+<form>
+<input type="button" value="Reset" onclick="go('reset')" style="font-size:120%;"><br />
+<!-- <input type="button" value="Reset" onclick="location.href='camera_view.fcgi?q=reset'" style="font-size:120%;"><br /> -->
+</form>
+<script type="text/javascript">
+function go(qry) {
+    $.ajax({
+        url: 'camera_view.fcgi?q=' + qry,
+        cache: false,
+        success: function(html){
+            document.write(html);
+        }
+    });
+}
+</script>
 </body>
 </html>
 """
