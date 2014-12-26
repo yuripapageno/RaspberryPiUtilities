@@ -9,9 +9,11 @@ _logger = Logger('camera_view.log')
 
 
 def myapp(environ, start_response):
+#    keys = environ.keys()
+#    keys.sort()
+#    for key in keys:
+#        _logger.debug('# %s: %s' % (key, repr(environ[key])))
     _logger.info('accessed from :' + str(environ['REMOTE_ADDR']))
-#    for key, value in environ.iteritems():
-#        _logger.debug('#' + key + ' :' + str(value))
     test = False
     if test:
         start_response('200 OK', [('Content-Type', 'text/plain')])
