@@ -28,7 +28,7 @@ def myapp(environ, start_response):
         if qs['q'][0] == 'reset':
             return [camera_list.reset()]
         else:
-            return [camera_list.page()]
+            return [camera_list.list()]
     else:
         return [camera_list.page()]
 #    return [camera_list.page()]
